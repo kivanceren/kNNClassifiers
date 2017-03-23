@@ -2,6 +2,10 @@ package com.exceptions.kivanc;
 
 public class IncorrectParameterException extends Exception {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String stringOne, stringTwo;
 	
 	public IncorrectParameterException(String s1) {

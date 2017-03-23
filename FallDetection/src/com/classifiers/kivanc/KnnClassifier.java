@@ -2,6 +2,7 @@ package com.classifiers.kivanc;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import com.datastructre.kivanc.Data;
@@ -19,11 +20,14 @@ public class KnnClassifier {
 	private List<Data> testSet;
 	private Metric distanceMethod;
 	private int classNumber;
+	private int [][]confusionMatrix;
 	
 	public KnnClassifier(){
 		super();
 		this.metric_Type = 1;
 		this.paramNeighbor = 1;
+		this.confusionMatrix = new int[classNumber][classNumber];
+		this.testSet = null;
 	}
 	
 	public void setClassifierParameters(int metric_Type, int paramNeighbor, int classNumber) throws InvalidParameterException
@@ -38,6 +42,17 @@ public class KnnClassifier {
 		
 		if(classNumber<=0) throw new InvalidParameterException();
 		else this.classNumber = classNumber;
+	}
+	
+	public void addDataSets(List<Data> dataSet)
+	{
+		this.dataSet = dataSet;
+	}
+	
+	public void addDataSets(List<Data> dataSet, List<Data> testSet)
+	{
+		this.dataSet = dataSet;
+		this.testSet = testSet;
 	}
 	
 	public int kNNClassifierMethod(List<Data> dataSet, Data instance) throws IllegalStateException, IncorrectParameterException
@@ -62,8 +77,7 @@ public class KnnClassifier {
 		
 		return classOfInstace;
 	}
-	
-	
+
 	public int classify(List<distanceFromInstance> distances)
 	{
 		Collections.sort(distances);
@@ -94,7 +108,21 @@ public class KnnClassifier {
 		
 		return index;		
 	}
-
+	
+	public void createConfusionMatrix() throws IllegalStateException, IncorrectParameterException
+	{
+		if(this.testSet.isEmpty()){
+				System.out.print("testSet boş ConfusionMatrix oluşturulamıyor...");
+			    return;
+			}	
+		Arrays.fill(confusionMatrix, 0);
+		for(Data testData: testSet){
+			int kNN_Class = this.kNNClassifierMethod(this.dataSet, testData);
+			int testDataClass = testData.getClassLabel();
+			confusionMatrix[testDataClass][kNN_Class]++;			
+		}
+	}
+	
 	public int getMetric_Type() {
 		return metric_Type;
 	}

@@ -22,6 +22,7 @@ public class KnnClassifier {
 	private int classNumber;
 	private int [][]confusionMatrix;
 	
+	
 	public KnnClassifier(){
 		super();
 		this.metric_Type = 1;
@@ -121,6 +122,21 @@ public class KnnClassifier {
 			int testDataClass = testData.getClassLabel();
 			confusionMatrix[testDataClass][kNN_Class]++;			
 		}
+	}
+	
+	
+	public String accuaryOfClassifiers()
+	{
+		int numberOfTestSet = this.testSet.size();
+		int correctClassifying = 0;
+		if(numberOfTestSet == 0 ) return "testSet sayısı Yetersiz!!!";//assert ile yazılabilir.
+		
+		for(int i=0 ; i <classNumber; i++)
+					correctClassifying += confusionMatrix[i][i];
+					
+		double accuary = (correctClassifying/numberOfTestSet)*100;  
+		
+		return "Accuary is %" + accuary + "." ;
 	}
 	
 	public int getMetric_Type() {

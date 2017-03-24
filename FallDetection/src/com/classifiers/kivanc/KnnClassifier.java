@@ -31,6 +31,60 @@ public class KnnClassifier {
 		this.testSet = null;
 	}
 	
+	public KnnClassifier(List<Data> dataSet){
+		super();
+		this.metric_Type = 1;
+		this.paramNeighbor = 1;
+		this.confusionMatrix = new int[classNumber][classNumber];
+		this.testSet = null;
+		this.dataSet = dataSet;
+	}
+	
+	public KnnClassifier(List<Data> dataSet, List<Data> testSet){
+		super();
+		this.metric_Type = 1;
+		this.paramNeighbor = 1;
+		this.confusionMatrix = new int[classNumber][classNumber];
+		this.testSet = null;
+		this.dataSet = dataSet;
+		this.testSet = testSet;
+	}
+	
+	public KnnClassifier(int metric_Type, int paramNeighbor, int classNumber, List<Data> dataSet){
+		super();
+		if(metric_Type>=0 && metric_Type<=1)
+			this.metric_Type = metric_Type;
+		else metric_Type=0;
+
+		if(paramNeighbor<1) paramNeighbor=1;
+		else this.paramNeighbor = paramNeighbor;
+
+		if(classNumber<=0) throw new InvalidParameterException();
+		else this.classNumber = classNumber;
+		
+		this.confusionMatrix = new int[classNumber][classNumber];
+		
+		this.dataSet = dataSet;
+	}
+	
+	public KnnClassifier(int metric_Type, int paramNeighbor, int classNumber, List<Data> dataSet, List<Data> testSet) throws InvalidParameterException{
+		super();
+		if(metric_Type>=0 && metric_Type<=1)
+			this.metric_Type = metric_Type;
+		else metric_Type=0;
+
+		if(paramNeighbor<1) paramNeighbor=1;
+		else this.paramNeighbor = paramNeighbor;
+
+		if(classNumber<=0) throw new InvalidParameterException();
+		else this.classNumber = classNumber;
+		
+		this.confusionMatrix = new int[classNumber][classNumber];
+		
+		this.dataSet = dataSet;
+		this.testSet = testSet;
+	}
+	
 	public void setClassifierParameters(int metric_Type, int paramNeighbor, int classNumber) throws InvalidParameterException
 	{
 		
@@ -56,10 +110,10 @@ public class KnnClassifier {
 		this.testSet = testSet;
 	}
 	
-	public int kNNClassifierMethod(List<Data> dataSet, Data instance) throws IllegalStateException, IncorrectParameterException
+	public int kNNClassifierMethod(Data instance) throws IllegalStateException, IncorrectParameterException
 	{
 		//data setin alınması ve ilgili kontrollerin yapılması ile distance tiplerinin beliritlmesi
-		this.dataSet = dataSet;
+		
 		if(dataSet.isEmpty()) throw new IllegalStateException();
 		if(instance == null) throw new IllegalStateException();
 		if(this.dataSet.size() < paramNeighbor) throw new IncorrectParameterException("dataSet Boyutu","En yakın komşu sayısı");
@@ -116,27 +170,42 @@ public class KnnClassifier {
 				System.out.print("testSet boş ConfusionMatrix oluşturulamıyor...");
 			    return;
 			}	
-		Arrays.fill(confusionMatrix, 0);
-		for(Data testData: testSet){
-			int kNN_Class = this.kNNClassifierMethod(this.dataSet, testData);
+		for(int i=0; i<testSet.size(); i++){
+			
+			Data testData = testSet.get(i);
 			int testDataClass = testData.getClassLabel();
-			confusionMatrix[testDataClass][kNN_Class]++;			
+			int kNN_Class = this.kNNClassifierMethod(testData);
+			confusionMatrix[testDataClass][kNN_Class]++;	
+			
 		}
 	}
-	
 	
 	public String accuaryOfClassifiers()
 	{
 		int numberOfTestSet = this.testSet.size();
+		
 		int correctClassifying = 0;
 		if(numberOfTestSet == 0 ) return "testSet sayısı Yetersiz!!!";//assert ile yazılabilir.
 		
 		for(int i=0 ; i <classNumber; i++)
 					correctClassifying += confusionMatrix[i][i];
-					
-		double accuary = (correctClassifying/numberOfTestSet)*100;  
+		
+		
+		double accuary = (correctClassifying*100)/numberOfTestSet;  
 		
 		return "Accuary is %" + accuary + "." ;
+	}
+	
+	public void printConfusionMatrix()
+	{
+		for(int i=0; i<classNumber; i++ )
+		{
+			for(int j=0; j<classNumber; j++){
+				System.out.print(confusionMatrix[i][j] + " ");
+			}
+			System.out.println();
+			
+		}
 	}
 	
 	public int getMetric_Type() {

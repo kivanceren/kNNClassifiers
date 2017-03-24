@@ -8,7 +8,7 @@ public class EuclideanDistance implements Metric {
 	@Override
 	public distanceFromInstance getDistance(Data dataSetSample, Data instance) {
 		
-		int size = dataSetSample.getAttributesSize();
+		int size = Data.getAttributesSize();
 		
 		double sum = 0;
 		

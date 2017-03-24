@@ -8,7 +8,7 @@ public class CosineSimilarity implements Metric {
 	@Override
 	public distanceFromInstance getDistance(Data dataSetSample, Data instance) {
 		
-		int size = dataSetSample.getAttributesSize();
+		int size = Data.getAttributesSize();
 		
 		double sum=0, sum1=0, sum2 = 0;
 		

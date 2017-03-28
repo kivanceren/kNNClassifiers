@@ -13,15 +13,22 @@ public class Data {
 	
 	private static int numberOfAttributes;
 	
+	private String dataString="";
+	
 	public Data(double[] attr, int classLabel) {
 		super();
 		
 		attributes = new double[attr.length];
 		numberOfAttributes = attr.length;
 		
-		for(int i=0; i< attr.length ; i++ ) attributes[i] = attr[i];
+		for(int i=0; i< attr.length ; i++ ) {
+			attributes[i] = attr[i];
+			dataString += attr[i] + " ";
+		}
 				
 		this.classLabel = classLabel;
+		
+		
 	}
 	
 	public static int getAttributesSize(){return numberOfAttributes;}
@@ -39,7 +46,8 @@ public class Data {
 
 	@Override
 	public String toString() {
-		return "Data [attributes=" + Arrays.toString(attributes) + ", classLabel=" + classLabel + "]";
+		
+		return dataString + classLabel;
 	}
 
 	

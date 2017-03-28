@@ -1,9 +1,11 @@
 package com.main.kivanc;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,8 @@ public class ReadFromFile {
 	
 	private List<Data> dataSet;
 	private BufferedReader bufferedReader;
-	
+    private BufferedWriter bufferedWriter;
+    
 	public ReadFromFile()
 	{
 		dataSet = new ArrayList<>();
@@ -46,8 +49,21 @@ public class ReadFromFile {
 	}
 	
 	public List<Data> getDataSet(){
-		System.out.println("dsfds  "+dataSet.size());
 		return (this.dataSet.isEmpty()) ? null : this.dataSet;
+	}
+	
+	public void writeData(File textFile, List<Data> data)
+	{
+		  try {
+			bufferedWriter = new BufferedWriter(new FileWriter(textFile));
+			for(Data dataItem : data)
+			  {
+				  bufferedWriter.write(dataItem.toString()+"\n");
+			  }
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 	
 }

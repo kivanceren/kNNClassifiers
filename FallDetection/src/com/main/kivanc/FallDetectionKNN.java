@@ -23,7 +23,7 @@ public class FallDetectionKNN {
 	    List<Data> divideDataSet, divideTestSet;
 	    
 	    int percent66 = dataSet.size()*66/100;
-	    
+	     
 	    divideDataSet = dataSet.subList(0, percent66);
 	    divideTestSet = dataSet.subList(percent66, dataSet.size());
 	    

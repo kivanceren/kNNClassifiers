@@ -1,10 +1,11 @@
 package com.datastructre.kivanc;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import com.classifiers.kivanc.KnnClassifier;
 
-public class Data {
+public class Data{
 	
 
 	private double[] attributes;
@@ -27,8 +28,19 @@ public class Data {
 		}
 				
 		this.classLabel = classLabel;
+	}
+	
+	public Data(String dataString){
+		String[] stringArray = dataString.split(" ");
+		attributes = new double[stringArray.length];
+		for(int i=0 ; i < attributes.length ; i++ ){
+			attributes[i] = Double.parseDouble(stringArray[i]);
+			dataString += attributes[i] + " ";
+		}
 		
 		
+		
+		this.classLabel = 0;
 	}
 	
 	public static int getAttributesSize(){return numberOfAttributes;}

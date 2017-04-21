@@ -133,7 +133,7 @@ public class KnnClassifier {
 		return classOfInstace;
 	}
 
-	public int classify(List<distanceFromInstance> distances)
+	private int classify(List<distanceFromInstance> distances)
 	{
 		Collections.sort(distances);
 		
@@ -151,7 +151,7 @@ public class KnnClassifier {
 		return returnMaxClassLabel(classLabel);
 	}
 	
-	public int returnMaxClassLabel(int []classLabel)
+	private int returnMaxClassLabel(int []classLabel)
 	{
 		int largest = classLabel[0], index = 0;
 		for (int i = 1; i < classLabel.length; i++) {

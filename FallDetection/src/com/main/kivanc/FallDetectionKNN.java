@@ -27,12 +27,12 @@ public class FallDetectionKNN {
 	    divideDataSet = dataSet.subList(0, percent66);
 	    divideTestSet = dataSet.subList(percent66, dataSet.size());
 	    
-	    double attr[] = {15.954, 5.722, -4.031, 17.421835752870592};
-	    Data data = new Data(attr, 0);
-	    
-	    
-	    /*double attr[] = {2.45,-0.703, 13.91, 14.142639251568287};
+	   /* double attr[] = { -0.27772522, 0.03112793, 9.476257, 9.480377};
 	    Data data = new Data(attr, 0);*/
+	    
+	    
+	    double attr[] = {-0.102, 3.912, 9.378, 10.161743551182543};
+	    Data data = new Data(attr, 0);
 	    
 	    KnnClassifier knnClassifier = new KnnClassifier(0, 5, 2, divideDataSet, divideTestSet);
 	    

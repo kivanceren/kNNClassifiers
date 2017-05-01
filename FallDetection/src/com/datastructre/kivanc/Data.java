@@ -1,10 +1,5 @@
 package com.datastructre.kivanc;
 
-import java.io.Serializable;
-import java.util.Arrays;
-
-import com.classifiers.kivanc.KnnClassifier;
-
 public class Data{
 	
 

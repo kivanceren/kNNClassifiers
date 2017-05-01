@@ -2,9 +2,12 @@ package com.classifiers.kivanc;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.datastructre.kivanc.Data;
 import com.datastructre.kivanc.distanceFromInstance;
 import com.distances.kivanc.CosineSimilarity;
@@ -21,29 +24,44 @@ public class KnnClassifier {
 	private Metric distanceMethod;
 	private int classNumber;
 	private int [][]confusionMatrix;
+	private static Map<Integer, String> classMap;
+	private String lastClassfiedInstaceClass;
 	
+	public void setClassLabels(String[] classNames){
+		classMap = new HashMap<Integer,String>();  
+		for(int i=0; i<classNames.length; i++){
+			classMap.put(i, classNames[i]);
+		}
+	}
 	
-	public KnnClassifier(){
+	public KnnClassifier(int cN){
 		super();
+		classMap = null;
 		this.metric_Type = 1;
 		this.paramNeighbor = 1;
+		this.classNumber = cN;
 		this.confusionMatrix = new int[classNumber][classNumber];
 		this.testSet = null;
 	}
 	
-	public KnnClassifier(List<Data> dataSet){
+	public KnnClassifier(List<Data> dataSet, int cN){
 		super();
+		classMap = null;
 		this.metric_Type = 1;
 		this.paramNeighbor = 1;
+		this.classNumber = cN;
 		this.confusionMatrix = new int[classNumber][classNumber];
 		this.testSet = null;
 		this.dataSet = dataSet;
+		
 	}
 	
-	public KnnClassifier(List<Data> dataSet, List<Data> testSet){
+	public KnnClassifier(List<Data> dataSet, List<Data> testSet, int cN){
 		super();
+		classMap = null;
 		this.metric_Type = 1;
 		this.paramNeighbor = 1;
+		this.classNumber = cN;
 		this.confusionMatrix = new int[classNumber][classNumber];
 		this.testSet = null;
 		this.dataSet = dataSet;
@@ -130,8 +148,20 @@ public class KnnClassifier {
 		
 		int classOfInstace = classify(distances);//sınıflandırma
 		
+		String classLabel = "";
+		try{
+			  lastClassfiedInstaceClass= classMap.get(classOfInstace);
+		}catch (Exception e) {
+			lastClassfiedInstaceClass = "" +classOfInstace;
+		}
+			
+				
 		return classOfInstace;
 	}
+	
+
+	
+	public String getClassName(){return lastClassfiedInstaceClass;}
 
 	private int classify(List<distanceFromInstance> distances)
 	{
@@ -144,6 +174,7 @@ public class KnnClassifier {
 		
 		for(distanceFromInstance nD :  neighborDistance) //knndeki en yakın komşuların sınıflarının sayılması.
 													classLabel[nD.getClassLabel()]++;
+		
 		
 		neighborDistance = null;
 		

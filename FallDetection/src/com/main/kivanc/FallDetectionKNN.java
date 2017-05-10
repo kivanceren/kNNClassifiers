@@ -37,14 +37,10 @@ public class FallDetectionKNN {
 	    KnnClassifier knnClassifier = new KnnClassifier(0, 5, 2, divideDataSet, divideTestSet);
 	    
 	    try {
-	    	
-			   int classLabel = knnClassifier.kNNClassifierMethod(data);
-			   data.setClassLabel(classLabel);
-			   System.out.println("Class is:" + classLabel);
-			   System.out.println(data.toString());
-			   /*knnClassifier.createConfusionMatrix();
-			   knnClassifier.printConfusionMatrix();		   
-			   System.out.println(knnClassifier.accuaryOfClassifiers() );*/
+	    	 knnClassifier.setParamNeighbor(7);
+			   knnClassifier.accuaryOfEachClasses();
+			  
+			   System.out.println(knnClassifier.getAccuaryOfClassifier());
 			   
 		} catch (IllegalStateException | IncorrectParameterException e) {
 			

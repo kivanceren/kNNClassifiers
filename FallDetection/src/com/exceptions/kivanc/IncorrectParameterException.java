@@ -21,7 +21,7 @@ public class IncorrectParameterException extends Exception {
 	@Override
 	public String toString()
 	{
-		if(stringTwo.isEmpty()) return stringOne + "geçersiz bir parametre.";
+		if(stringTwo.isEmpty()) return stringOne;
 		return stringOne + " ve " + stringTwo + "arasında yanlış bir ilişki var KNN kurallarını kontrol ediniz.";
 		
 	}

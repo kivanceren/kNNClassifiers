@@ -17,7 +17,8 @@ public class CosineSimilarity implements Metric {
 			sum1 += Math.pow(dataSetSample.getAttributes(i),2);
 			sum2 += Math.pow(dataSetSample.getAttributes(i), 2);
 		}
-		
+		sum1 = Math.sqrt(sum1);
+		sum2 = Math.sqrt(sum2);
 		double cosineSimilarity = sum/(sum1*sum2);
 		
 		return new distanceFromInstance(cosineSimilarity, dataSetSample.getClassLabel()); 
